@@ -26,7 +26,7 @@ else
 fi
 
 for ((i = 0; i < $2; i++)); do #Loop creating directories
-  if [ "$(df --block-size=GB | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
+  if [ "$(df --block-size=GB / | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
     exit
   fi
   if [ "$i" -eq 0 ] ; then

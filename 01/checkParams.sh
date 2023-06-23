@@ -6,7 +6,7 @@ function checkParams() {
       echo "The number of parameters must be 6.
 Parameter 1 : path.
 Parameter 2 : count of subfolders.
-Parameter 3 : list of letters for file names (max 7).
+Parameter 3 : list of letters for folder names (max 7).
 Parameter 4 : the number of files in each created folder.
 Parameter 5 : list of letters used in the file name and extension (name - max 7, extension - max 3).
 Parameter 6 : the size of the files (in kilobytes, but not more than 100)."
