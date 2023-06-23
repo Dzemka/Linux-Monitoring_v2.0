@@ -7,6 +7,7 @@ if [ ! -z "$check" ]; then
   exit
 fi
 
+dateStart=$(date +"%d%m%y")
 lengthFolderLetter=${#3} #Get length parameter 3
 LD=${3:0:1} #Get first letter of directory name
 LF=${5:0:1} #Get first letter of filename
@@ -26,7 +27,7 @@ else
 fi
 
 for ((i = 0; i < $2; i++)); do #Loop creating directories
-  if [ "$(df --block-size=GB / | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
+  if [ "$(df -h | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
     exit
   fi
   if [ "$i" -eq 0 ] ; then
@@ -37,7 +38,7 @@ for ((i = 0; i < $2; i++)); do #Loop creating directories
     selectedIndex=$((RANDOM % lengthFolderLetter))
     nameDirArray[$selectedIndex]+=${3:$selectedIndex:1}
   fi
-  dirName="$1/$(IFS=; echo "${nameDirArray[*]}")_$(date +"%d%m%y")"
+  dirName="$1/$(IFS=; echo "${nameDirArray[*]}")_$dateStart"
   if [ -d "$dirName" ]; then #If folder exist, create new name
     i=$((i-1))
     continue
@@ -46,7 +47,7 @@ for ((i = 0; i < $2; i++)); do #Loop creating directories
   mkdir "$dirName"
 
   for (( j = 0; j < $4; j++ )); do
-      if [ "$(df --block-size=GB | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
+      if [ "$(df -h | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
         exit
       fi
     if [ "$j" -eq 0 ]; then
@@ -57,7 +58,7 @@ for ((i = 0; i < $2; i++)); do #Loop creating directories
       selectedIndex=$((RANDOM % fileNameMaxIndex))
       nameFileArray[$selectedIndex]+=${5:$selectedIndex:1}
     fi
-    fileName="$(IFS=; echo "${nameFileArray[*]}")_$(date +%d%m%y)"
+    fileName="$(IFS=; echo "${nameFileArray[*]}")_$dateStart"
   yes | head -$fileChars > "$dirName/$fileName"
   done
 done
