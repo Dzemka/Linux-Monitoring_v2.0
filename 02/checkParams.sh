@@ -2,7 +2,7 @@
 
 function checkParams() {
     if [ $# -ne 3 ]; then
-      echo "The number of parameters must be 6.
+      echo "The number of parameters must be 3.
 Parameter 1 : list of letters for folder names (max 7).
 Parameter 2 : list of letters used in the file name and extension (name - max 7, extension - max 3).
 Parameter 3 : the size of the files (in megabytes, but not more than 100)."
