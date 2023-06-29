@@ -2,6 +2,7 @@
 . ./checkParams.sh
 
 start=$(date +"%s.%N")
+timeStart=$(date +"%T")
 
 check="$(checkParams $@)"
 
@@ -80,6 +81,7 @@ nameDirArray=()
 done
 
 end=$(date +"%s.%N")
-time="Start : $start, end : $end, total : $(awk 'BEGIN { printf "%f\n", '$end' - '$start' }')"
+timeEnd=$(date +"%T")
+time="Start : $timeStart, end : $timeEnd, total : $(awk 'BEGIN { printf "%f\n", '$end' - '$start' }')"
 echo "$time"
 echo "$time" >> "$fileLogName"
