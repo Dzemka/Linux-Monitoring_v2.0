@@ -50,19 +50,18 @@ elif [ "$1" -eq 2 ]; then
       if ! echo "$mask" | grep -qE '^[a-zA-Z]+[.]{0,1}[a-zA-Z]{0,}_[0-9]{2}[0-9]{2}[0-9]{2}$'; then
         echo "Incorrect mask"
       fi
-      array=()
-      lengthMask=${#mask}
-      isDate=0
-      for (( i = 0; i < lengthMask; i++ )); do
-        if [ "${mask:i:1}" == '_' ]; then
-          isDate=1
-        fi
-        array[i]="${mask:$i:1}"
-        if [ $isDate -ne 1 ]; then
-          array[i]+="+"
-        fi
-      done
-        IFS=;
-        find /home -name "${array[*]}"
+        lengthStr=${#mask}
+        isAddPlus=1
+        for (( i = 0; i < lengthStr; i++ )); do
+            array[i]="${mask:i:1}"
+            if [ "${array[i]}" == "_" ] || [ "${array[i]}" == "." ]; then
+              isAddPlus=0
+            fi
+            if [ "$isAddPlus" -eq 1 ]; then
+              array[i]+="+"
+            fi
+        done
+        str=$(echo "${array[*]}" | sed 's/ //g')
+        find /home/ | grep -E "$str" | xargs rm -rf
 fi
 

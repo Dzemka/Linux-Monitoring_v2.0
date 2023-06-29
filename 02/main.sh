@@ -5,14 +5,14 @@ start=$(date +"%s.%N")
 
 check="$(checkParams $@)"
 
-if [ ! -z "$check" ]; then
+if [ -n "$check" ]; then
   echo -e "$check"
   exit
 fi
 
 dateStart=$(date +"%d%m%y")
 fileLogName="result_$(date +"%d_%m_%Y_%H_%M_%S").log"
-lengthFolderLetter=${#3} #Get length parameter 3
+lengthFolderLetter=${#2} #Get length parameter 3
 
 fileSize=${3//Mb/} #Cut out "Mb". Example: 100Mb -> 100
 fileChars=$((fileSize * 1000000 / 2)) #Calculate count chars to put in files
