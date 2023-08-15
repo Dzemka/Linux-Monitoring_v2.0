@@ -12,7 +12,7 @@ function getRandomIp() {
 }
 
 function getTime() {
-    date -d @"$1" | awk '{print $4}'
+    date -d @"$1" | awk '{print $5}'
 }
 
 function getRandomMethod() {

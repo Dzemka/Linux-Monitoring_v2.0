@@ -1,5 +1,8 @@
 #!/bin/bash
 . ./checkParams.sh
+. ./combination.sh
+. ./createFolders.sh
+
 check="$(checkParams $@)"
 
 if [ ! -z "$check" ]; then
@@ -7,58 +10,45 @@ if [ ! -z "$check" ]; then
   exit
 fi
 
+#Init variables
 dateStart=$(date +"%d%m%y")
+countChars=$(echo ${6%kb} | awk '{print $1 * 500}') #Count of characters to fill the file, excluding line breaks
+
+
+  #Set folder variables
 lengthFolderLetter=${#3} #Get length parameter 3
-LD=${3:0:1} #Get first letter of directory name
-LF=${5:0:1} #Get first letter of filename
-nameDirArray[0]=$LD$LD$LD #fill array first letters
-nameFileArray[0]=$LF$LF$LF #fill array first letters
-
-fileSize=${6//kb/} #Cut out "kb". Example: 100kb -> 100
-fileChars=$((fileSize * 1000 / 2)) #Calculate count chars to put in files
-
-lengthFileLetter=${#5} #Get length parameter 5
-indexDot=`expr index $5 .` #Get dot index
-
-if [ "$indexDot" -gt 1 ] ; then #Get the length before the point
-  fileNameMaxIndex=$((indexDot - 1))
+folderLetters=($(echo $3 | grep -o .)) #Letter array for folders
+indexFolder=$((lengthFolderLetter - 1))
+if [[ $lengthFolderLetter -lt 4 ]]; then
+  numberMaxFolder=$((5 - $lengthFolderLetter))
+  isAddCombinationFolder=1
 else
-  fileNameMaxIndex=$lengthFileLetter
+  numberMaxFolder=3
+  isAddCombinationFolder=0
 fi
-
-for ((i = 0; i < $2; i++)); do #Loop creating directories
-  if [ "$(df -h | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
-    exit
-  fi
-  if [ "$i" -eq 0 ] ; then
-    for (( j = 0; j < "$lengthFolderLetter"; j++ )); do
-        nameDirArray[$j]+=${3:$j:1}
-    done
-  else
-    selectedIndex=$((RANDOM % lengthFolderLetter))
-    nameDirArray[$selectedIndex]+=${3:$selectedIndex:1}
-  fi
-  dirName="$1/$(IFS=; echo "${nameDirArray[*]}")_$dateStart"
-  if [ -d "$dirName" ]; then #If folder exist, create new name
-    i=$((i-1))
-    continue
-  fi
-
-  mkdir "$dirName"
-
-  for (( j = 0; j < $4; j++ )); do
-      if [ "$(df -h | grep -E '/$' | awk '{printf("%d", $4)}')" -le 1 ]; then #If size partition "/" less or equal 1GB exit
-        exit
-      fi
-    if [ "$j" -eq 0 ]; then
-      for (( k = 0; k < lengthFileLetter; k++ )); do
-          nameFileArray[$k]=${5:$k:1}
-      done
-    else
-      selectedIndex=$((RANDOM % fileNameMaxIndex))
-      nameFileArray[$selectedIndex]+=${5:$selectedIndex:1}
-    fi
-    fileName="$(IFS=; echo "${nameFileArray[*]}")_$dateStart"
-  yes | head -$fileChars > "$dirName/$fileName"
-  done
+for((i = 0; i < $lengthFolderLetter; i++)); do
+  combFolderNames[i]=1
 done
+
+  #Set file variables
+lengthFileLetter=${#5} #Get length parameter 5
+fileNameLetters=${5%.*} #Get fileName without extension
+fileLetters=($(echo $fileNameLetters | grep -o .)) #Get array letters
+indexFile=$((lengthFileLetterWithoutExt - 1))
+extFile=$(echo $5 | awk -F '.' '{print $2}')
+if [[ -n "$extFile" ]]; then
+  extFile=".$extFile"
+fi
+lengthFileLetterWithoutExt=${#fileLetters[@]}
+if [[ $lengthFileLetter -lt 4 ]]; then
+  numberMaxFile=$((5 - $lengthFileLetter))
+  isAddCombinationFile=1
+else
+  numberMaxFile=3
+  isAddCombinationFile=0
+fi
+for ((i = 0; i < $lengthFileLetterWithoutExt; i++)); do
+  combFileNames[$i]=1
+done
+
+createFolders $@
