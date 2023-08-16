@@ -18,14 +18,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+        "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
       },
       "fieldConfig": {
         "defaults": {
@@ -76,10 +76,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
-          "expr": "node_filesystem_avail_bytes{mountpoint=\"/\"}",
+          "expr": "node_filesystem_avail_bytes{job=\"node\", mountpoint=\"/\"}",
           "instant": false,
           "range": true,
           "refId": "A"
@@ -87,10 +87,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
-          "expr": "node_filesystem_size_bytes{mountpoint=\"/\"}",
+          "expr": "node_filesystem_size_bytes{job=\"node\", mountpoint=\"/\"}",
           "hide": false,
           "instant": false,
           "range": true,
@@ -102,10 +102,14 @@
         {
           "id": "configFromData",
           "options": {
+            "applyTo": {
+              "id": "byType",
+              "options": "number"
+            },
             "configRefId": "B",
             "mappings": [
               {
-                "fieldName": "node_filesystem_size_bytes{device=\"/dev/mapper/ubuntu--vg-ubuntu--lv\", fstype=\"ext4\", instance=\"192.168.31.107:9100\", job=\"node\", mountpoint=\"/\"}",
+                "fieldName": "node_filesystem_size_bytes{device=\"/dev/mapper/ubuntu--vg-ubuntu--lv\", fstype=\"ext4\", instance=\"192.168.56.101:9100\", job=\"node\", mountpoint=\"/\"}",
                 "handlerKey": "max"
               }
             ]
@@ -117,7 +121,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+        "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
       },
       "fieldConfig": {
         "defaults": {
@@ -165,10 +169,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
-          "expr": "node_memory_MemAvailable_bytes",
+          "expr": "node_memory_MemAvailable_bytes {job=\"node\"}",
           "instant": false,
           "range": true,
           "refId": "A"
@@ -176,10 +180,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
-          "expr": "node_memory_MemTotal_bytes",
+          "expr": "node_memory_MemTotal_bytes {job=\"node\"}",
           "hide": false,
           "instant": false,
           "range": true,
@@ -194,7 +198,7 @@
             "configRefId": "B",
             "mappings": [
               {
-                "fieldName": "node_memory_MemTotal_bytes{instance=\"192.168.31.107:9100\", job=\"node\"}",
+                "fieldName": "node_memory_MemTotal_bytes{instance=\"192.168.56.101:9100\", job=\"node\"}",
                 "handlerKey": "max"
               }
             ]
@@ -206,7 +210,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+        "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
       },
       "fieldConfig": {
         "defaults": {
@@ -257,10 +261,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
-          "expr": "1 - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) without(cpu)",
+          "expr": "1 - avg(irate(node_cpu_seconds_total{job=\"node\", mode=\"idle\"}[5m])) without(cpu)",
           "instant": false,
           "range": true,
           "refId": "A"
@@ -272,7 +276,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+        "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
       },
       "description": "",
       "fieldConfig": {
@@ -354,11 +358,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "irate(node_disk_reads_completed_total{device=\"sda\"}[5m])",
+          "expr": "irate(node_disk_reads_completed_total{job=\"node\", device=\"sda\"}[5m])",
           "instant": false,
           "legendFormat": "Count output operations",
           "range": true,
@@ -367,10 +371,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "d3e42c84-c3e4-4106-a41c-ea3578872458"
+            "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
           },
           "editorMode": "code",
-          "expr": "irate(node_disk_writes_completed_total{device=\"sda\"}[5m])",
+          "expr": "irate(node_disk_writes_completed_total{job=\"node\", device=\"sda\"}[5m])",
           "hide": false,
           "instant": false,
           "legendFormat": "Count input operations",
@@ -410,6 +414,6 @@
   "timezone": "",
   "title": "07",
   "uid": "ea935e8d-aa49-4721-bfc8-dbfc3798b445",
-  "version": 9,
+  "version": 10,
   "weekStart": ""
 }

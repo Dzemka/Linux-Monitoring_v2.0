@@ -1,0 +1,292 @@
+{
+	"annotations": {
+	  "list": [
+		{
+		  "builtIn": 1,
+		  "datasource": {
+			"type": "grafana",
+			"uid": "-- Grafana --"
+		  },
+		  "enable": true,
+		  "hide": true,
+		  "iconColor": "rgba(0, 211, 255, 1)",
+		  "name": "Annotations & Alerts",
+		  "type": "dashboard"
+		}
+	  ]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 0,
+	"id": 4,
+	"links": [],
+	"liveNow": false,
+	"panels": [
+	  {
+		"datasource": {
+		  "type": "prometheus",
+		  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-RdYlGr"
+			},
+			"displayName": "Disk memory available",
+			"mappings": [],
+			"min": 0,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "deckbytes"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 12,
+		  "x": 0,
+		  "y": 0
+		},
+		"id": 3,
+		"options": {
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "10.0.0",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "prometheus",
+			  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+			},
+			"editorMode": "builder",
+			"expr": "disk_available_kilobytes",
+			"instant": false,
+			"range": true,
+			"refId": "A"
+		  },
+		  {
+			"datasource": {
+			  "type": "prometheus",
+			  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+			},
+			"editorMode": "builder",
+			"expr": "disk_total_kilobytes",
+			"hide": false,
+			"instant": false,
+			"range": true,
+			"refId": "B"
+		  }
+		],
+		"title": "Disk",
+		"transformations": [
+		  {
+			"id": "configFromData",
+			"options": {
+			  "configRefId": "B",
+			  "mappings": [
+				{
+				  "fieldName": "disk_total_kilobytes{instance=\"localhost:9111\", job=\"custom_exporter\"}",
+				  "handlerKey": "max"
+				}
+			  ]
+			}
+		  }
+		],
+		"type": "gauge"
+	  },
+	  {
+		"datasource": {
+		  "type": "prometheus",
+		  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-GrYlRd"
+			},
+			"displayName": "Load CPU",
+			"mappings": [],
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "percent"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 12,
+		  "x": 0,
+		  "y": 8
+		},
+		"id": 2,
+		"options": {
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "10.0.0",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "prometheus",
+			  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+			},
+			"editorMode": "builder",
+			"expr": "cpu_busy",
+			"instant": false,
+			"range": true,
+			"refId": "A"
+		  }
+		],
+		"title": "CPU",
+		"type": "gauge"
+	  },
+	  {
+		"datasource": {
+		  "type": "prometheus",
+		  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+		},
+		"fieldConfig": {
+		  "defaults": {
+			"color": {
+			  "mode": "continuous-RdYlGr"
+			},
+			"displayName": "RAM available",
+			"mappings": [],
+			"min": 0,
+			"thresholds": {
+			  "mode": "absolute",
+			  "steps": [
+				{
+				  "color": "green",
+				  "value": null
+				},
+				{
+				  "color": "red",
+				  "value": 80
+				}
+			  ]
+			},
+			"unit": "decbytes"
+		  },
+		  "overrides": []
+		},
+		"gridPos": {
+		  "h": 8,
+		  "w": 12,
+		  "x": 0,
+		  "y": 16
+		},
+		"id": 1,
+		"options": {
+		  "orientation": "auto",
+		  "reduceOptions": {
+			"calcs": [
+			  "lastNotNull"
+			],
+			"fields": "",
+			"values": false
+		  },
+		  "showThresholdLabels": false,
+		  "showThresholdMarkers": true
+		},
+		"pluginVersion": "10.0.0",
+		"targets": [
+		  {
+			"datasource": {
+			  "type": "prometheus",
+			  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+			},
+			"editorMode": "builder",
+			"expr": "mem_available_bytes",
+			"instant": false,
+			"range": true,
+			"refId": "A"
+		  },
+		  {
+			"datasource": {
+			  "type": "prometheus",
+			  "uid": "c1e14c01-8f08-4e73-86d7-dd9801a802dc"
+			},
+			"editorMode": "builder",
+			"expr": "mem_total_bytes",
+			"hide": false,
+			"instant": false,
+			"range": true,
+			"refId": "B"
+		  }
+		],
+		"title": "RAM",
+		"transformations": [
+		  {
+			"id": "configFromData",
+			"options": {
+			  "configRefId": "B",
+			  "mappings": [
+				{
+				  "fieldName": "mem_total_bytes{instance=\"localhost:9111\", job=\"custom_exporter\"}",
+				  "handlerKey": "max"
+				}
+			  ]
+			}
+		  }
+		],
+		"type": "gauge"
+	  }
+	],
+	"refresh": "",
+	"schemaVersion": 38,
+	"style": "dark",
+	"tags": [],
+	"templating": {
+	  "list": []
+	},
+	"time": {
+	  "from": "now-6h",
+	  "to": "now"
+	},
+	"timepicker": {},
+	"timezone": "",
+	"title": "New dashboard",
+	"uid": "e8512ddd-bd30-44a2-873e-b6b88a2913a4",
+	"version": 6,
+	"weekStart": ""
+  }
