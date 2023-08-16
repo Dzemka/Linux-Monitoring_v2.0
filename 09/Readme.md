@@ -16,4 +16,4 @@ Add ports:
 `sudo systemctl restart prometheus`
 On grafana import 09_dashboard.json
 # Run exporter
-`./main.sh`
+`sudo ./main.sh`
