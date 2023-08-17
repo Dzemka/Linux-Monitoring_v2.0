@@ -14,7 +14,6 @@ fi
 dateStart=$(date +"%d%m%y")
 countChars=$(echo ${6%kb} | awk '{print $1 * 500}') #Count of characters to fill the file, excluding line breaks
 
-
   #Set folder variables
 lengthFolderLetter=${#3} #Get length parameter 3
 folderLetters=($(echo $3 | grep -o .)) #Letter array for folders
@@ -34,12 +33,12 @@ done
 lengthFileLetter=${#5} #Get length parameter 5
 fileNameLetters=${5%.*} #Get fileName without extension
 fileLetters=($(echo $fileNameLetters | grep -o .)) #Get array letters
+lengthFileLetterWithoutExt=${#fileLetters[@]}
 indexFile=$((lengthFileLetterWithoutExt - 1))
 extFile=$(echo $5 | awk -F '.' '{print $2}')
 if [[ -n "$extFile" ]]; then
   extFile=".$extFile"
 fi
-lengthFileLetterWithoutExt=${#fileLetters[@]}
 if [[ $lengthFileLetter -lt 4 ]]; then
   numberMaxFile=$((5 - $lengthFileLetter))
   isAddCombinationFile=1

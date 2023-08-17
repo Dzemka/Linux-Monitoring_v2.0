@@ -7,7 +7,7 @@ function fillFolder {
   size=$lengthFileLetterWithoutExt
   isAddCombination=$isAddCombinationFile
   declare -i numberMax=numberMaxFile
-  for (( countFilesCreated = 0; countFilesCreated < $1; countFilesCreated++)); do
+  for (( countFilesCreated = 0; countFilesCreated <= $1; countFilesCreated++)); do
     if [[ $(df -Bg / | awk 'NR==2 {print $4}' | sed 's/G//') -le 1 ]]; then
       exit
     fi
@@ -35,6 +35,6 @@ function createFolders {
             continue
         fi
         mkdir $folderName
-        fillFolder $4  
+        fillFolder $4
     done
 }

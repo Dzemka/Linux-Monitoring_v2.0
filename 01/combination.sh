@@ -1,12 +1,10 @@
 #!/bin/bash
 
 function printName {
-    lenName=0
     for ((x = 0; x < $size; x++)); do
         for ((v = 0; v < ${arrCopy[$x]}; v++)); do
             echo -n ${arrLetters[$x]}
         done
-        lenName=$((lenName + ${arrCopy[$x]}))
     done
     echo
 }
